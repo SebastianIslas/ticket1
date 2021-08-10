@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.87.0">
+    <title>Presupuestos</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sticky-footer-navbar/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <!-- Custom styles for this template -->
+    <link href="./assets/css/home.css" rel="stylesheet">
+  </head>
+  <body class="d-flex flex-column h-100">
+    
+<header id="navbar">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <link href="./assets/css/navbar.css" rel="stylesheet">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/navbars/">
+  <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+  
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Eighth navbar example">
+    <div class="container">
+      <a class="navbar-brand" href="#">Presupuestos - TI</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarsExample07">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+  <div class="container-tabla">
+    <table id="table" class="display table mt-5 table table-striped table-hover">
+      <thead>
+        <tr>
+         <th scope="col">ID</th>
+          <th scope="col">Proyecto</th>
+          <th scope="col">Version</th>
+          <th scope="col">Acciones
+            <a id="editar" href="./presupuesto.html"> ADD</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tabla-body">
+      </tbody>
+
+      <template id ="template">
+        <tr>
+          <th scope="row">ID</th>
+          <td id ="proyecto">PROYECTO</td>
+          <td id="version">VERSION</td>
+          <td>
+            <button id="editar" onclick="editar('id')">Editar</button>
+            <button id="borrar" onclick="borrar('id')">Borrar</button>
+            <button id="enviar"  onclick="enviar()">Enviar</button>
+          </td>
+        </tr>
+      </template>
+
+    </table>
+  </div>
+</main>
+
+
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/home.js"></script>
+
+
+      
+  </body>
+</html>
