@@ -1,44 +1,51 @@
-//Importo los modulos necesarios
 const { Presupuestos } = require('../models/models.presupuestos');
 
 
-//Exporto los modulos de trabajo
-
-module.exports.getPresupuestos = async (usuario)=>{
-    console.log(usuario);
+const getPresupuestos = async (req,res)=>{
+    console.log(req.params.idUsuario)
+    if(req.params.idUsuario)
+        usuario = req.params.idUsuario
+    else
+        usuario = req.usuario
     try {
         let resultado = await Presupuestos.findAll({
-            where: { usuario: usuario } 
+            where: { usuario } 
         })
-        return resultado
+        res.status(200).json(resultado)
     }catch (err){
-        console.log(err)
-        throw new Error ('Ocurrio un error en la consulta')
+//        console.log(err)
+        res.status(400).json(err.message)
     }
 }
 
-module.exports.getPresupuesto = async (idPresupuesto)=>{
-    console.log(idPresupuesto);
+const datosPresupuesto = async (req,res)=>{
+    try {
+        let idPresupuesto = req.params.idPresupuesto
+        let resultado = await Presupuestos.findAll({
+            where: { id_front: idPresupuesto } 
+        })
+        res.status(200).json(resultado)
+    }catch (err){
+        console.log(err)
+        res.status(400).json(err.message)
+    }
+}
+
+const getDetallesPresupuesto = async (req, res)=>{
+    let idPresupuesto = req.params.idPresupuesto
     try {
         let resultado = await Presupuestos.findAll({
             where: { id_front: idPresupuesto } 
         })
-        return resultado
+        res.status(200).json(resultado)
     }catch (err){
         console.log(err)
-        throw new Error ('Ocurrio un error en la consulta')
+        res.status(400).json(err.message)
     }
 }
 
-module.exports.getTablasPresupuesto = async (idPresupuesto)=>{
-    console.log(idPresupuesto);
-    try {
-        let resultado = await Presupuestos.findAll({
-            where: { id_front: idPresupuesto } 
-        })
-        return resultado
-    }catch (err){
-        console.log(err)
-        throw new Error ('Ocurrio un error en la consulta')
-    }
+module.exports = {
+    getPresupuestos,
+    datosPresupuesto,
+    getDetallesPresupuesto
 }

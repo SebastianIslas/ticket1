@@ -5,11 +5,6 @@ require('dotenv').config();
 const sequelize = require('./app/db/db.conexion');
 const cors = require('cors');
 
-//Configuraciones globales
-app.use(express.static(__dirname + '/public'))
-app.set('view engine', 'ejs')
-app.set('views', __dirname + '/views')
-
 //MIDDLEWARES
 app.use(express.json());
 app.use(express.urlencoded( { extended: true }));
@@ -35,7 +30,4 @@ async function inicioServer() {
 }
 
 inicioServer();
-
-//ROUTES
-app.use('/login', require('./app/routes/route.login'));
-app.use('/presupuestos', require('./app/routes/route.presupuestos'));
+app.use( require('./app/routes/router.index'));
