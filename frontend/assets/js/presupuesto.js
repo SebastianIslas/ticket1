@@ -1,18 +1,13 @@
 let tablas;
 
 const getProyecto = async (idPresupuesto) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    console.log(token);
-    let result = await fetch('http://localhost:3000/presupuestos/'+idPresupuesto, {
-        method: 'get',
-        headers: {
-          "Accept": "application/json, text/plain, */*",
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}`
-        }
-    })
-    let resultado = await result.json()
-    return resultado;
+    try {
+        const resultado = await api.fetch('presupuestos/'+idPresupuesto,'GET','');
+        alert(resultado)
+        return resultado;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const determinarPresupuestos = async () => {

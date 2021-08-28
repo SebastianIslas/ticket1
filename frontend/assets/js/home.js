@@ -1,16 +1,10 @@
 const getPresupuestosUsuario = async () => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    console.log(token);
-    const apiCall = await fetch("http://localhost:3000/presupuestos/usuario", {
-      method: 'get',
-      headers: {
-        "Accept": "application/json, text/plain, */*",
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${token}`
-      }
-    });
-    let resultado = await apiCall.json();
+  try {
+    const resultado = await api.fetch('presupuestos/usuario','GET','');
     return resultado;
+  } catch (error) {
+    window.location.href = './index.html';
+  }
 }
 
 async function getPresupuestos() {
