@@ -15,13 +15,9 @@ const RecursosDesg = db.define('recursos_desgloce', {
             key: 'id'
         }
     },
-    id_mes: {
+    num_mes: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-            model: 'meses',
-            key: 'id'
-        }
     },
     porcentaje_asignado: {
         type: Sequelize.INTEGER,

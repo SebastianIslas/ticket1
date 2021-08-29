@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body onload="determinarPresupuesto()">
     <header id="navbar">
         <link href="./assets/css/navbar.css" rel="stylesheet">
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/navbars/">
         <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="./assets/css/presupuestos.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+        <script src="./assets/js/bootstrap.bundle.min.js"></script>
+
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Eighth navbar example">
             <div class="container">
             <a class="navbar-brand" href="#">Presupuestos - TI</a>
@@ -26,118 +29,639 @@
                     <a class="nav-link active" aria-current="page" href="./home.html">Inicio</a>
                 </li>
                 </ul>
-                <form>
-                    <button >Guardar</button>
-                    <button >Cancelar</button>
-                </form>
             </div>
             </div>
         </nav>
     </header>
 
-    <div class="seccion" id="resumen-financiero">
-        <h1>RESUMEN FINANCIERO</h1>
-        <table id="table" class=" mt-0 table table-striped table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Ventas</th>
-                <th scope="col">Costos</th>
-                <th scope="col">Margen</th>
-                <th scope="col">%</th>
-            </tr>
-            </thead>
-            <tbody>
-                <td>FE_Ingr_Tot</td>
-                <td>FE_Egre_Tot</td>
-                <td>Vent-Costos</td>
-                <td>Margen / Ventas</td>
-            </tr>
-            </th>
-            </tbody>
 
-        </table>
-    </div>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
 
-    <div class="seccion" id="flujo-efectivo">
-        <h1>FLUJO DE EFECTIVO</h1>
-        <button class="Agregar" onclick="agregarColumna()">Agregar</button>
-        <button class="elimnar">Eliminar</button>
-        <div id="mes-inicio" style="display:none">
-            <p>Mes de inicio: </p>
-            <select name="mes-inicio" id="mes">
-                <option value="0">Enero</option>
-                <option value="1">Febrero</option>
-                <option value="2">Marzo</option>
-                <option value="3">Abril</option>
-                <option value="4">Mayo</option>
-                <option value="5">Junio</option>
-                <option value="6">Julio</option>
-                <option value="7">Agosto</option>
-                <option value="8">Septiembre</option>
-                <option value="9">Octubre</option>
-                <option value="10">Noviembre</option>
-                <option value="11">Deciembre</option>
-            </select>
-            <button class="CambiarMesInicio" id="aplicar-mes-inicio" onclick="fijarMesInicio()">Aplicar</button>
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne">
+            FLUJO DE EFECTIVO
+            </button>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <button class="Agregar" id="agregarColumna">Agregar</button>
+                <button class="elimnar">Eliminar</button>
+                <button class="Agregar" id="actFlujoEfectivo">Aplicar cambios</button>
+
+                <div id="mes-inicio" style="display:none">
+                    <p>Mes de inicio: </p>
+                    <select name="mes-inicio" id="mes">
+                        <option value="0">Enero</option>
+                        <option value="1">Febrero</option>
+                        <option value="2">Marzo</option>
+                        <option value="3">Abril</option>
+                        <option value="4">Mayo</option>
+                        <option value="5">Junio</option>
+                        <option value="6">Julio</option>
+                        <option value="7">Agosto</option>
+                        <option value="8">Septiembre</option>
+                        <option value="9">Octubre</option>
+                        <option value="10">Noviembre</option>
+                        <option value="11">Deciembre</option>
+                    </select>
+                    <button class="CambiarMesInicio" id="aplicar-mes-inicio">Aplicar</button>
+                </div>
+        
+                <table class="table table-striped" id="flujo-efectivo">
+                    <thead>
+                        <tr id="th0">
+                            <th scope="col">#</th>
+                            <th scope="end" class ="total" id="final0">Total</th>
+                        </tr>
+                        </thead>
+                    <tbody >
+                        <tr>
+                            <th>Ingresos</th>
+                            <td > TOTAL</td>
+                        </tr>
+                        <tr>
+                            <th>Egresos</th>
+                            <td > TOTAL</td>
+                        </tr>
+                        <tr>
+                            <th>Total Mes</th>
+                            <td > TOTAL</td>
+                        </tr>
+                        <tr>
+                            <th>Acumulado</th>
+                            <td > TOTAL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <table class="table table-striped" id="tabla0">
-            <thead>
-                <tr id="th0">
-                    <th scope="col">#</th>
-                    <th scope="end" class ="total" id="final0">Total</th>
-                </tr>
-                </thead>
-            <tbody >
-                <tr>
-                    <th>Ingresos</th>
+        <template class="seccion" id="flujo-efectivo2">
+            <button class="Agregar" onclick="agregarColumna()">Agregar</button>
+            <button class="elimnar">Eliminar</button>
+            <div id="mes-inicio" style="display:none">
+                <p>Mes de inicio: </p>
+                <select name="mes-inicio" id="mes">
+                    <option value="0">Enero</option>
+                    <option value="1">Febrero</option>
+                    <option value="2">Marzo</option>
+                    <option value="3">Abril</option>
+                    <option value="4">Mayo</option>
+                    <option value="5">Junio</option>
+                    <option value="6">Julio</option>
+                    <option value="7">Agosto</option>
+                    <option value="8">Septiembre</option>
+                    <option value="9">Octubre</option>
+                    <option value="10">Noviembre</option>
+                    <option value="11">Deciembre</option>
+                </select>
+                <button class="CambiarMesInicio" id="aplicar-mes-inicio" onclick="fijarMesInicio()">Aplicar</button>
+            </div>
+    
+            <table class="table table-striped" id="tabla0">
+                <thead>
+                    <tr id="th0">
+                        <th scope="col">#</th>
+                        <th scope="end" class ="total" id="final0">Total</th>
+                    </tr>
+                    </thead>
+                <tbody >
+                    <tr>
+                        <th>Ingresos</th>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Egresos</th>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                      <th>Total Mes</th>
+                      <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Acumulado</th>
+                        <td > TOTAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo">
+                ESTADO DE RESULTADOS
+            </button>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <table class="table table-striped" id="estado-resultados">
+                        <thead>
+                            <tr id="th1">
+                                <th scope="col">#</th>
+                                <th scope="col" class ="total" id="final1">Total</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            <tr>
+                                <th>Ventas</th>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                              <th>Costos</th>
+                              <td > TOTAL</td>
+                          </tr>
+                            <tr>
+                                <th>Margen</th>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>Saldo Final</th>
+                                <td > TOTAL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <template class="seccion" id="estado-resultados2">
+            <table class="table table-striped" id="tabla1">
+                <thead>
+                    <tr id="th1">
+                        <th scope="col">#</th>
+                        <th scope="col" class ="total" id="final1">Total</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <th>Ventas</th>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                      <th>Costos</th>
+                      <td > TOTAL</td>
+                  </tr>
+                    <tr>
+                        <th>Margen</th>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Saldo Final</th>
+                        <td > TOTAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree">
+            INGRESOS
+            </button>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <button class="Agregar" onclick ="agregarFilaIngresos('tabla2')">Agregar fila</button>
+                    <table class="table table-striped" id="tabla2">
+                        <thead>
+                            <tr id="th2">
+                                <th scope="col">#</th>
+                                <th id ="final2">Eliminar</th>
+                                <th scope="col" class ="total">Total</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            <tr>
+                                <th>Concepto</th>
+                                <td>Botesito</td>
+                                <td>label-Calc</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td></td>
+                                <td>label-calc</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <template class="seccion" id="ingresos">
+            <h1>INGRESOS</h1>
+            <button class="Agregar" onclick ="agregarFilaIngresos('tabla2')">Agregar fila</button>
+            <table class="table table-striped" id="tabla2">
+                <thead>
+                    <tr id="th2">
+                        <th scope="col">#</th>
+                        <th id ="final2">Eliminar</th>
+                        <th scope="col" class ="total">Total</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <th>Concepto</th>
+                        <td>Botesito</td>
+                        <td>label-Calc</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td></td>
+                        <td>label-calc</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+    
+
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour">
+            COSTOS DIRECTOS
+            </button>
+            <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body"> 
+                    <form action="">
+                        <button type ="submit" class="Agregar">Agregar</button>
+                        <select name="opcion" id="">
+                            <option value="">Opc1</option>
+                            <option value="">Opc2</option>
+                            <option value="">Opc3</option>
+                        </select>
+                    </form>
+                    <table class="table table-striped" id="tabla3">
+                        <thead>
+                            <tr id="th3">
+                                <th scope="col">#</th>
+                                <th id ="final3">Eliminar</th>
+                                <th scope="col" class ="total" >Total</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            <th>Concepto</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>OtroConcepto</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>OtroConcepto</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                </div>
+            </div>
+        </div>
+
+        <template class="seccion" id="costos-directo">
+            <h1>COSTOS DIRECTOS</h1>
+            <form action="">
+                <button type ="submit" class="Agregar">Agregar</button>
+                <select name="opcion" id="">
+                    <option value="">Opc1</option>
+                    <option value="">Opc2</option>
+                    <option value="">Opc3</option>
+                </select>
+            </form>
+            <table class="table table-striped" id="tabla3">
+                <thead>
+                    <tr id="th3">
+                        <th scope="col">#</th>
+                        <th id ="final3">Eliminar</th>
+                        <th scope="col" class ="total" >Total</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    <th>Concepto</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>OtroConcepto</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>OtroConcepto</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive">
+            GASTOS ADMINISTRATIVOS
+            </button>
+            <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <button class="Agregar">Agregar-this</button>
+                    <select name="ocpion" id="">
+                        <option value="">Opc1</option>
+                        <option value="">Opc2</option>
+                        <option value="">Opc3</option>
+                    </select>
+                    <table class="table table-striped" id="tabla4">
+                        <thead>
+                            <tr id="th4">
+                                <th scope="col">#</th>
+                                <th id ="final4">Eliminar</th>
+                                <th scope="col" class ="total" id="total">Total</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            <tr>
+                                <th>Concepto</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>OtroConcepto</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>OtroConcepto</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <template class="seccion" id="gastos-administrativos">
+            <h1>GASTOS ADMINISTRATIVOS</h1>
+            <button class="Agregar">Agregar-this</button>
+            <select name="ocpion" id="">
+                <option value="">Opc1</option>
+                <option value="">Opc2</option>
+                <option value="">Opc3</option>
+            </select>
+            <table class="table table-striped" id="tabla4">
+                <thead>
+                    <tr id="th4">
+                        <th scope="col">#</th>
+                        <th id ="final4">Eliminar</th>
+                        <th scope="col" class ="total" id="total">Total</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <th>Concepto</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>OtroConcepto</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>OtroConcepto</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+    
+
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix">
+            RECURSOS
+            </button>
+            <div id="flush-collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <button class="Agregar">Agregar_ this and next 2 sections</button>
+                    <label for="">Pide el nombre del rol y el costo mensual que se guarda 
+                        en costos y aqui solo el % por mes
+                    </label>
+                    <table class="table table-striped" id="tabla5">
+                        <thead>
+                            <tr id="th5">
+                                <th scope="col">#</th>
+                                <th id ="final5">Eliminar</th>
+                                <th scope="col" class ="total" id="total">Total</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            <th>Rol</th>
+                            <td>Delete</td>
+                            <td > TOTAL</td>
+                        </tr>
+                            <tr>
+                                <th>OtroRol</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <template class="seccion" id="recursos">
+            <h1>RECURSOS</h1>
+            <button class="Agregar">Agregar_ this and next 2 sections</button>
+            <label for="">Pide el nombre del rol y el costo mensual que se guarda 
+                en costos y aqui solo el % por mes
+            </label>
+            <table class="table table-striped" id="tabla5">
+                <thead>
+                    <tr id="th5">
+                        <th scope="col">#</th>
+                        <th id ="final5">Eliminar</th>
+                        <th scope="col" class ="total" id="total">Total</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    <th>Rol</th>
+                    <td>Delete</td>
                     <td > TOTAL</td>
                 </tr>
-                <tr>
-                    <th>Egresos</th>
+                    <tr>
+                        <th>OtroRol</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven">
+            COSTOS
+            </button>
+            <div id="flush-collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <table class="table table-striped" id="tabla6">
+                        <thead>
+                            <tr id="th6">
+                                <th scope="col">ROL</th>
+                                <th id ="final6">Eliminar</th>
+                                <th scope="col" class ="total" id="total">Total</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            <th>Rol</th>
+                            <td>Delete</td>
+                            <td > TOTAL</td>
+                        </tr>
+                            <tr>
+                                <th>OtroRol</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <template class="seccion" id="costos">
+            <h1>COSTOS</h1>
+            <table class="table table-striped" id="tabla6">
+                <thead>
+                    <tr id="th6">
+                        <th scope="col">ROL</th>
+                        <th id ="final6">Eliminar</th>
+                        <th scope="col" class ="total" id="total">Total</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    <th>Rol</th>
+                    <td>Delete</td>
                     <td > TOTAL</td>
                 </tr>
-                <tr>
-                  <th>Total Mes</th>
-                  <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>Acumulado</th>
-                    <td > TOTAL</td>
-                </tr>
-            </tbody>
-        </table>
+                    <tr>
+                        <th>OtroRol</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+
+
+        <div class="accordion-item">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEigth">
+            RESUMEN - COSTOS
+            </button>
+            <div id="flush-collapseEigth" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <table class="table table-striped" id="tabla7">
+                        <thead>
+                            <tr id="th7">
+                                <th scope="col">ROL</th>
+                                <th id ="final7">Eliminar</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            <tr>
+                                <th>Rol</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>OtroRol</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                            <tr>
+                                <th>Total</th>
+                                <td>Delete</td>
+                                <td > TOTAL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    
+        <template class="seccion" id="resumen-costos">
+            <h1>RESUMEN COSTOS</h1>
+            <table class="table table-striped" id="tabla7">
+                <thead>
+                    <tr id="th7">
+                        <th scope="col">ROL</th>
+                        <th id ="final7">Eliminar</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <th>Rol</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>OtroRol</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>Delete</td>
+                        <td > TOTAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+    
     </div>
 
-    <div class="seccion" id="estado-resultados">
-        <h1>ESTADO DE RESULTADOS</h1>
-        <table class="table table-striped" id="tabla1">
-            <thead>
-                <tr id="th1">
-                    <th scope="col">#</th>
-                    <th scope="col" class ="total" id="final1">Total</th>
-                </tr>
-                </thead>
-            <tbody>
-                <tr>
-                    <th>Ventas</th>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                  <th>Costos</th>
-                  <td > TOTAL</td>
-              </tr>
-                <tr>
-                    <th>Margen</th>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>Saldo Final</th>
-                    <td > TOTAL</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
+
 
     <template>
         <div class="seccion" id="id-tabla">
@@ -172,213 +696,9 @@
         </div>    
     </template>
 
-    <div class="seccion" id="ingresos">
-        <h1>INGRESOS</h1>
-        <button class="Agregar" onclick ="agregarFilaIngresos('tabla2')">Agregar fila</button>
-        <table class="table table-striped" id="tabla2">
-            <thead>
-                <tr id="th2">
-                    <th scope="col">#</th>
-                    <th id ="final2">Eliminar</th>
-                    <th scope="col" class ="total">Total</th>
-                </tr>
-                </thead>
-            <tbody>
-                <tr>
-                    <th>Concepto</th>
-                    <td>Botesito</td>
-                    <td>label-Calc</td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <td></td>
-                    <td>label-calc</td>
-                </tr>
-            </tbody>
-        </table>
 
-    </div>
-
-    <div class="seccion" id="costos-directo">
-        <h1>COSTOS DIRECTOS</h1>
-        <form action="">
-            <button type ="submit" class="Agregar">Agregar</button>
-            <select name="opcion" id="">
-                <option value="">Opc1</option>
-                <option value="">Opc2</option>
-                <option value="">Opc3</option>
-            </select>
-        </form>
-        <table class="table table-striped" id="tabla3">
-            <thead>
-                <tr id="th3">
-                    <th scope="col">#</th>
-                    <th id ="final3">Eliminar</th>
-                    <th scope="col" class ="total" >Total</th>
-                </tr>
-                </thead>
-            <tbody>
-                <th>Concepto</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>OtroConcepto</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>OtroConcepto</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="seccion" id="gastos-administrativos">
-        <h1>GASTOS ADMINISTRATIVOS</h1>
-        <button class="Agregar">Agregar-this</button>
-        <select name="ocpion" id="">
-            <option value="">Opc1</option>
-            <option value="">Opc2</option>
-            <option value="">Opc3</option>
-        </select>
-        <table class="table table-striped" id="tabla4">
-            <thead>
-                <tr id="th4">
-                    <th scope="col">#</th>
-                    <th id ="final4">Eliminar</th>
-                    <th scope="col" class ="total" id="total">Total</th>
-                </tr>
-                </thead>
-            <tbody>
-                <tr>
-                    <th>Concepto</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>OtroConcepto</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>OtroConcepto</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="seccion" id="recursos">
-        <h1>RECURSOS</h1>
-        <button class="Agregar">Agregar_ this and next 2 sections</button>
-        <label for="">Pide el nombre del rol y el costo mensual que se guarda 
-            en costos y aqui solo el % por mes
-        </label>
-        <table class="table table-striped" id="tabla5">
-            <thead>
-                <tr id="th5">
-                    <th scope="col">#</th>
-                    <th id ="final5">Eliminar</th>
-                    <th scope="col" class ="total" id="total">Total</th>
-                </tr>
-                </thead>
-            <tbody>
-                <th>Rol</th>
-                <td>Delete</td>
-                <td > TOTAL</td>
-            </tr>
-                <tr>
-                    <th>OtroRol</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="seccion" id="costos">
-        <h1>COSTOS</h1>
-        <table class="table table-striped" id="tabla6">
-            <thead>
-                <tr id="th6">
-                    <th scope="col">ROL</th>
-                    <th id ="final6">Eliminar</th>
-                    <th scope="col" class ="total" id="total">Total</th>
-                </tr>
-                </thead>
-            <tbody>
-                <th>Rol</th>
-                <td>Delete</td>
-                <td > TOTAL</td>
-            </tr>
-                <tr>
-                    <th>OtroRol</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-
-    <div class="seccion" id="resumen-costos">
-        <h1>RESUMEN COSTOS</h1>
-        <table class="table table-striped" id="tabla7">
-            <thead>
-                <tr id="th7">
-                    <th scope="col">ROL</th>
-                    <th id ="final7">Eliminar</th>
-                    <th>Total</th>
-                </tr>
-                </thead>
-            <tbody>
-                <tr>
-                    <th>Rol</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>OtroRol</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-                <tr>
-                    <th>Total</th>
-                    <td>Delete</td>
-                    <td > TOTAL</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-
-    <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src = "./assets/js/api.js"></script>
+    <script src = "./assets/js/columnas.js"></script>
     <script src = "./assets/js/tablas.js"></script>
     <script src = "./assets/js/presupuesto.js"></script>
 

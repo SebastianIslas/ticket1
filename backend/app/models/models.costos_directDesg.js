@@ -15,14 +15,9 @@ const CostosDirectDesg = db.define('costos_directos_desgloce', {
             key: 'id'
         }
     },
-    id_mes: {
+    num_mes: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-            model: 'meses',
-            key: 'id'
-        }
-
     },
     valor: {
         type: Sequelize.FLOAT,

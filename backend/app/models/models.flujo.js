@@ -15,13 +15,9 @@ const Flujo = db.define('flujo_efectivo', {
             key: 'id'
         }
     },
-    id_mes: {
+    num_mes: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-            model: 'meses',
-            key: 'id'
-        }
     },
     ingresos: {
         type: Sequelize.FLOAT,

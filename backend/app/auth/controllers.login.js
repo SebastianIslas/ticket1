@@ -26,9 +26,6 @@ const iniciarSesion = async (req,res)=>{
     }
 }
 
-
-
-
 module.exports = {
     iniciarSesion
 }

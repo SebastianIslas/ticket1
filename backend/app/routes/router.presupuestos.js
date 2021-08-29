@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();
 
 const { validarToken } = require('../services/service.JWT')
+
 const {
     checkPostPresupuesto,
     checkPutPresupuesto
  } = require('../middlewares/midd.presupuestos')
-const {
+
+ const {
     getPresupuestos,
     datosPresupuesto,
     getDetallesPresupuesto,
@@ -23,13 +25,8 @@ app.put('/:idPresupuesto',checkPutPresupuesto, validarToken, putPresupuesto);
 app.delete('/:idPresupuesto', validarToken, deletePresupuesto);
 
 
-
 //Todos los presupuestos del usuario logeado
 app.get('/', validarToken, getPresupuestos);
-
-//Presupuestos de un usuario 
-//app.get('/usuario/:idUsuario', validarToken, getPresupuestos)
-
 
 //OBTIENE DETALLES DE UN PRESUPUESTO, TODAS LAS TABLAS
 app.get('/:idPresupuesto/detalles', validarToken, getDetallesPresupuesto)

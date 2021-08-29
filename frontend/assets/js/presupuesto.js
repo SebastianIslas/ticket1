@@ -1,90 +1,76 @@
-let tablas;
+let columnas;
+let datosProyecto;
 
-const getProyecto = async (idPresupuesto) => {
+const btnAgregarColumna = document.getElementById('agregarColumna');
+const btnActFlujoEfectivo = document.getElementById('actFlujoEfectivo');
+const btnFijarMesInicio = document.getElementById('aplicar-mes-inicio');
+
+window.onload = async () => {
+    btnAgregarColumna.addEventListener('click', flujoEfectivo.addMes);
+    //Actualiza datos de tabla Flujo Efectivo y cant de meses al presupuesto
+    btnActFlujoEfectivo.addEventListener('click', flujoEfectivo.actFlujoEfectivo);
+    btnFijarMesInicio.addEventListener('click', flujoEfectivo.mesInicio);
+//    btnFijarMesInicio.addEventListener('click', () => { agregarTitulo("ingresos") });
+
+    console.log("++++ Datos del presupuesto +++++")
+    await determinarPresupuesto();
+    flujoEfectivo.render();
+//    estadoResultados.render();
+
+}
+
+const determinarPresupuesto = async () => {
     try {
-        const resultado = await api.fetch('presupuestos/'+idPresupuesto,'GET','');
-        return resultado;
+        urlParams = new URLSearchParams(window.location.search)
+        datosProyecto = await api.fetch('presupuestos/'+urlParams.get('id'),'GET','');
+        presupuesto(datosProyecto[0].mes_inicio, datosProyecto[0].cant_meses);
+        console.log(datosProyecto)
+        console.log("++++ Datos del presupuesto ++++++")
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
-
-const determinarPresupuestos = async () => {
-    urlParams = new URLSearchParams(window.location.search)
-    if(urlParams.get('id') != null) {
-        let proyecto = await getProyecto(urlParams.get('id'));
-        console.log("Editar Presupuesto")
-        console.log(proyecto)
-        presupuesto(proyecto[0].mes_inicio, proyecto[0].cant_meses);
-    } else{
-        console.log("Nuevo Presupuesto")
-        presupuesto();
-    }
-}
-
-determinarPresupuestos();
 
 function presupuesto(mes_inicio, cant_columnas){
     if(mes_inicio == undefined ||  cant_columnas == undefined){
-        tablas = new Columnas(null,0);
-        console.log(tablas.columnas)    
+        columnas = new Columnas(null,0);
+        console.log(columnas.columnas)    
     } else{
-        tablas = new Columnas(mes_inicio,cant_columnas);
-        console.log(tablas.columnas)
-        tablas.getMeses().forEach(mes =>{   //Renderiza todos los meses en todas las tablas
-            renderizarColumna(mes);
-        })
+        columnas = new Columnas(mes_inicio,cant_columnas);
+        console.log(columnas.columnas)
     }
 }
 
 
-function agregarColumna(){ //Agrega columna a todas las tablas (mes)
-    if(tablas.cant_columnas == 0){  //Habilita opcion de mes inicial
-        div_mes_inicio = document.getElementById("mes-inicio");
-        div_mes_inicio.style.display = "block";
-    } else{
-        tablas.addColumn(); //Mes inicio ya existe y solo agrega un mes mas
-        renderizarColumna(tablas.getLastMonth());
-    }
-}
 
-function fijarMesInicio(){
-    mes = document.getElementById("mes").value;
-    div_mes_inicio = document.getElementById("mes-inicio");
-    div_mes_inicio.style.display = "none";
-    tablas.addColumn(mes);  //mes sera el mes de inicio
-    console.log(tablas.columnas);
-    renderizarColumna(tablas.getLastMonth()); //Renderiza el ultimo mes agregado en todas las tablas
-}
-
-function renderizarColumna(mes){    //Renderiza la columna para todas las tablas
-    for(let i=0; i<2; i++) {
+function renderizarColumna(mes, i){    //Renderiza el mes para la tabla con el id 'tablai', ej: tabla0
+    //i = numero de tabla asignado por mi desde el front para renderizar
+    if(i <2){   //Tienen la misma estructura
         let th = document.getElementById("th"+i);
         let columnFinal = document.getElementById("final"+i);
         let columna =document.createElement("th");
         columna.textContent = mes;
         th.insertBefore(columna,columnFinal);
         let tabla = document.getElementById("tabla"+i);
-        for (var j = 1, row; row = tabla.rows[j]; j++) {
+        for (let j = 1, row; row = tabla.rows[j]; j++) {
             row.insertCell(row.cells.length-1);
         }
-    }
-
-    for(let i=2; i<8; i++) {    
+    } else if(i<8){ ////Tienen la misma estructura de tabla3 a tabla7
         let th = document.getElementById("th"+i);
         let columnFinal = document.getElementById("final"+i);
         let columna =document.createElement("th");
         columna.textContent = mes;
         th.insertBefore(columna,columnFinal);
         let tabla = document.getElementById("tabla"+i);
-        for (var j = 1, row; row = tabla.rows[j]; j++) {
+        for (let j = 1, row; row = tabla.rows[j]; j++) {
             row.insertCell(row.cells.length-2);
         }
-    } 
+    } else{
+        alert('La tabla no existe')
+    }
 }
 
 function agregarFilaIngresos(id){
-
     if(concepto = prompt('Ingresa el nombre del concepto')){
         tabla = document.getElementById(id);
         console.log( tabla.rows[1].cells)
