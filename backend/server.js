@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 
-const sequelize = require('./app/db/db.conexion');
+const sequelize = require('./db/db.conexion');
 const cors = require('cors');
 
 //MIDDLEWARES
@@ -10,10 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded( { extended: true }));
 app.use(cors());
 
-
-
 //Services
-const { corsOption } = require('./app/middlewares/midd.index');
+//const { corsOption } = require('./app/middlewares/midd.index');
 
 //iniciamos servidor
 async function inicioServer() {

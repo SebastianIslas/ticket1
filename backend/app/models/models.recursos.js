@@ -1,5 +1,5 @@
-const { Sequelize, Deferrable }  = require('sequelize');
-const db = require('../db/db.conexion');
+const { Sequelize }  = require('sequelize');
+const db = require('../../db/db.conexion');
 
 const Recursos= db.define('recursos', {
     id: {
@@ -18,10 +18,6 @@ const Recursos= db.define('recursos', {
     concepto: {
         type: Sequelize.STRING,
         allowNull: false,
-        references: {
-            model: 'meses',
-            key: 'id'
-        }
     },
     costo_mensual: {
         type: Sequelize.FLOAT,

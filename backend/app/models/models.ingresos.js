@@ -1,5 +1,5 @@
-const { Sequelize, Deferrable }  = require('sequelize');
-const db = require('../db/db.conexion');
+const { Sequelize }  = require('sequelize');
+const db = require('../../db/db.conexion');
 
 const Ingresos = db.define('ingresos', {
     id: {

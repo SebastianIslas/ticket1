@@ -15,6 +15,7 @@ const validarToken = async (req, res, next)=> {
             const token = req.headers.authorization.split(' ')[1]
             const resultado = jwt.verify(token, process.env.SECRET_KEY)
             req.usuario = resultado.usuario
+            console.log('Autorizado')
             return next()
         }else{
             throw new Error ('Requieres autorización')

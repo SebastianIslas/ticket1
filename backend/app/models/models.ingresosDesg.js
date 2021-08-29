@@ -1,5 +1,5 @@
-const { Sequelize, Deferrable }  = require('sequelize');
-const db = require('../db/db.conexion');
+const { Sequelize }  = require('sequelize');
+const db = require('../../db/db.conexion');
 
 const IngresosDesg = db.define('ingresos_desgloce', {
     id: {
@@ -16,7 +16,7 @@ const IngresosDesg = db.define('ingresos_desgloce', {
         }
     },
     id_mes: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
             model: 'meses',

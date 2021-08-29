@@ -69,7 +69,7 @@
           <th scope="col">Proyecto</th>
           <th scope="col">Version</th>
           <th scope="col">Acciones
-            <a id="editar" href="./presupuesto.html"> ADD</a>
+            <button id="agregar" data-bs-toggle="modal" data-bs-target="#agregarProyecto"> AGREGAR</button>
           </th>
         </tr>
       </thead>
@@ -93,9 +93,41 @@
   </div>
 </main>
 
+<!-- ADD PROYECTO-->
+<div class="modal fade" id="agregarProyecto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Nuevo Presupuesto</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+      </div>
+      <div class="modal-body">
+          <form id="formularioValorar" >
+            <label>ID del presupuesto</label><br>
+            <input type="text" id="id_front" name = "id_front">
+            <br>
+            <label>Nombre del proyecto</label><br>
+            <input type="text" id="proyecto_post" name = "proyecto_post">
+            <br>
+            <label>Version</label><br>
+            <input type="text" id="version_post" name = "version_post">
+            <br>
+          </form>
+          <button type="button" onclick ="agregar()" class="btn btn-primary">Agregar</button>
+      </div>
+  </div>
+  </div>
+</div>
 
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/api.js"></script>
+    <script src="./assets/js/validaciones.js"></script>
     <script src="./assets/js/home.js"></script>
 
 

@@ -4,12 +4,16 @@ const login = async () => {
         let usuario = document.getElementById("usuario").value;
         let password = document.getElementById("password").value;
         let formData = { usuario, password };
-        let res = await api.fetch('login','POST',formData);
-        console.log("Entro")
-        localStorage.setItem('token',JSON.stringify(res));
-        window.location.href = './home.html'
+        if(validarTxt(usuario) || validarTxt(password)){
+            throw ('Ingresa los datos')
+        } else{
+            let res = await api.fetch('login','POST',formData);
+            console.log("Entro")
+            localStorage.setItem('token',JSON.stringify(res));
+            window.location.href = './home.html'
+        }
     } catch (error) {
-        alert(error.message)     
+        alert(error)
     }
 
 };

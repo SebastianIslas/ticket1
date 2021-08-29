@@ -1,5 +1,5 @@
 const { Sequelize, Deferrable }  = require('sequelize');
-const db = require('../db/db.conexion');
+const db = require('../../db/db.conexion');
 
 const CostosDirectDesg = db.define('costos_directos_desgloce', {
     id: {

@@ -3,7 +3,6 @@ let tablas;
 const getProyecto = async (idPresupuesto) => {
     try {
         const resultado = await api.fetch('presupuestos/'+idPresupuesto,'GET','');
-        alert(resultado)
         return resultado;
     } catch (error) {
         console.log(error);

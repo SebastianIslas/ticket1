@@ -1,11 +1,10 @@
-const midd = require('../middlewares/midd.usuarios')
 const express = require('express');
 const app = express();
-
+const { checkLogin } = require('../auth/midd.login');
 const { 
     iniciarSesion
  }= require('../auth/controllers.login')
 
-app.post('/', iniciarSesion);
+app.post('/', checkLogin, iniciarSesion);
 
 module.exports = app;
