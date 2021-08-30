@@ -53,6 +53,7 @@ class FlujoEfectivo{
             };
             let bodyIngresos = {};
             let max = columnas.cant_columnas + columnas.mes_inicio
+            console.log(columnas.mes_inicio)
             for (let j = columnas.mes_inicio; j<max; j++) {
                 ingresos = document.getElementById("FE-"+j).value;
                 bodyIngresos[j] = ingresos
@@ -88,8 +89,9 @@ class FlujoEfectivo{
         div_mes_inicio.style.display = "none";
         columnas.addColumn(mes);
         console.log(columnas.columnas);
+        console.log(datosProyecto[0].proyecto)
         let body = {
-            proyecto: datosProyecto[0].id_front,
+            proyecto: datosProyecto[0].proyecto,
             version: datosProyecto[0].version,
             mes_inicio: mes,
             cant_meses: columnas.cant_columnas,
@@ -97,12 +99,15 @@ class FlujoEfectivo{
         await api.fetch(`presupuestos/${datosProyecto[0].id_front}`,'PUT', body);
         let ingresosBody = {
             ingresos: 0,
-            //Obtiene el ultimo mes actual y le suma 1 para seguir la secuencia
-            num_mes: columnas.mes_inicio + columnas.columnas.length
-//            num_mes: this.ingresos[ingresos.length-1].num_mes + 1
+            num_mes: parseInt(columnas.cant_columnas) + parseInt(columnas.mes_inicio) -1
         }
-        await api.fetch(`presupuestos/${datosProyecto[0].id_front}`,'PUT', ingresosBody);
-        this.renderMes(columnas.getLastMonth(), 0, num_mes )
+        //            num_mes: this.ingresos[ingresos.length-1].num_mes + 1
+        console.log("ingresosBody")
+        console.log(ingresosBody)
+        console.log(ingresosBody.num_mes)
+        await api.fetch(`presupuestos/${datosProyecto[0].id_front}/flujo`,'POST', ingresosBody);
+        window.location.reload()
+        //        this.renderMes(columnas.getLastMonth(), 0, ingresosBody.num_mes )
     }
 
     async renderMes(mes, value, num_mes){
@@ -173,30 +178,6 @@ class EstadoResultados{
         }
         console.log(body)
         return body;
-    }
-
-    async mesInicio(){
-        this.tabla = document.getElementById("estado-resultados");
-        let mes = document.getElementById("mes").value;
-        let div_mes_inicio = document.getElementById("mes-inicio");
-        div_mes_inicio.style.display = "none";
-        columnas.addColumn(mes);
-        console.log(columnas.columnas);
-        let body = {
-            proyecto: datosProyecto[0].id_front,
-            version: datosProyecto[0].version,
-            mes_inicio: mes,
-            cant_meses: columnas.cant_columnas,
-        };
-        await api.fetch(`presupuestos/${datosProyecto[0].id_front}`,'PUT', body);
-        let ingresosBody = {
-            ingresos: 0,
-            //Obtiene el ultimo mes actual y le suma 1 para seguir la secuencia
-            num_mes: columas.mes_inicio + columnas.columnas.length
-//            num_mes: this.ingresos[ingresos.length-1].num_mes + 1
-        }
-        await api.fetch(`presupuestos/${datosProyecto[0].id_front}`,'PUT', ingresosBody);
-        this.renderMes(columnas.getLastMonth(), 0, num_mes )
     }
 
     async renderMes(mes, value, num_mes){

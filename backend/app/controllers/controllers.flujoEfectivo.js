@@ -50,6 +50,8 @@ const putPresupuestoFlujo = async (req, res)=>{
         await Flujo.destroy({where: {id_presupuesto:id.id}})
         //Ordena los datos para el bulkCreate
         let datos = [];
+        console.log("SSSSSSSSSSSSSSSSSSSSSSSS")
+        console.log(req.body)
         for (let key in req.body) {
             let ingreso = {
                 'id_presupuesto' : id.id,
